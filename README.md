@@ -1,2 +1,0 @@
-# AgendaDj
-Django/Html/Css
