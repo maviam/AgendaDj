@@ -22,5 +22,8 @@ class Contact(models.Model):
     # e o TIMEZONE para 'Europe/Lisbon'
     description = models.TextField(blank=True)
     
+    def __str__(self):
+        return f'{self.first_name} {self.last_name} ({self.email})'
+    
     
     
