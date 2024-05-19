@@ -21,6 +21,8 @@ class Contact(models.Model):
     # Não esquecer de ir a settings.py e alterar o LANGUAGE_CODE para 'pt-pt'
     # e o TIMEZONE para 'Europe/Lisbon'
     description = models.TextField(blank=True)
+    show = models.BooleanField(default=True)
+    picture = models.ImageField(blank=True,upload_to='pictures/%Y/%m')
     
     def __str__(self):
         return f'{self.first_name} {self.last_name} ({self.email})'
