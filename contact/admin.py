@@ -12,4 +12,8 @@ class ContactAdmin(admin.ModelAdmin):
     list_max_show_all = 200 # Máximo de registos em uma página
     list_editable = ('last_name',) # Lista de campos editáveis
     list_display_links = ('first_name',) # Campo com hierpligação direta para a edição do contato
-    
+
+@admin.register(models.Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    ordering = ('-id',) 
