@@ -5,11 +5,21 @@ from django.core.paginator import Paginator
 
 # Create your views here.
 def create(request):
-
-	context = {
+    if request.method == 'POST': # QUando enviamos os dados do formulário
+        print()
+        print(request.method)
+        # Para ver na consola que o texto escrito é "pego" pela instrução dentro do print
+        print(request.POST.get('first_name')) # first_name foi o nome dado ao input do formulário
+    
+    context = {
 		
 	}
-	return render(
+    
+    # Método GET (quando acedemos a página create,html)
+    print()
+    print(request.method)
+    
+    return render(
 	    request,
 	    'contact/create.html',
 		context
