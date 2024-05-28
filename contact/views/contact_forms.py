@@ -10,9 +10,18 @@ from forms import ContactForm
 # Create your views here.
 def create(request):
     if request.method == 'POST':
+        form = ContactForm(data=request.POST)
         context = {
-		    'form': ContactForm(data=request.POST)
+		    'form': form
 	    }
+        
+        if form.is_valid():
+            # print('O formulário não contém erros')
+            # contact = form.save(commit=False)
+            # contact.show = False
+            # contact.save()
+            form.save()
+            return redirect('contact:create')
     
         return render(
 	        request,
