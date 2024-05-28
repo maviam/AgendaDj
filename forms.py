@@ -34,23 +34,31 @@ class ContactForm(forms.ModelForm):
         # }
     
     def clean(self):
-        # Para mostrar que a classe tem acesso aos dados dos campos antes da submissão ...
-        cleaned_data = self.cleaned_data # Guarda os valores inseridos em um dicionário
-        print(cleaned_data)
-        # Vamos simular erros
-        self.add_error(
-			None,
-			ValidationError(
-				'Dados em falta ou inválidos',
-				code='invalid'
-			)
-		)
-        # Vamos simular outro erro
-        self.add_error(
-			None,
-			ValidationError(
-				'Nova mensagem de erro',
-				code='invalid'
-			)
-		)
+        first_name = self.cleaned_data.get('first_name')
+        last_name = self.cleaned_data.get('last_name')
+        
+        msg = ValidationError(
+                    'O primeiro e o último nome devem ser diferentes',
+                    code='invalid'
+                )
+        
+        if first_name == last_name:
+            self.add_error('first_name',msg)
+            self.add_error('last_name',msg)
+        
         return super().clean()
+    
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        
+        if first_name == 'ABC':
+            self.add_error(
+                'first_name',
+                ValidationError(
+                    'O primeiro nome não pode ser ABC',
+                    code='invalid'
+                )
+            )
+        
+        return first_name
+            
