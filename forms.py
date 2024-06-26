@@ -1,6 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from contact.models import Contact
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class ContactForm(forms.ModelForm):
     picture = forms.ImageField(
@@ -68,4 +70,22 @@ class ContactForm(forms.ModelForm):
             )
         
         return first_name
-            
+
+class RegisterForm(UserCreationForm):
+    first_name = forms.CharField(required=True, min_length=3,error_messages={'required': 'Esqueceu de preencher o primeiro nome!'},)
+    last_name = forms.CharField(required=True, min_length=3,error_messages={'required': 'Esqueceu de preencher o último nome!'},)
+    email = forms.EmailField(error_messages={'required': 'Esqueceu de preencher o e-mail ou e-mail inválido!'},)
+    
+    class Meta:
+        model = User
+        fields = ('first_name','last_name','email','username',)
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        
+        if User.objects.filter(email=email).exists():
+            self.add_error (
+                'email',
+                ValidationError('Já existe um utilizador com este e-mail!', code='Invalid')
+            )
+        return email
