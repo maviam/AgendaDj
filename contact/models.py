@@ -29,7 +29,7 @@ class Contact(models.Model):
     email = models.EmailField(max_length=100, blank=True) # Permite deixar o campo vazio
     # CharField é um campo de preenchimento obrigatório
     created_date = models.DateTimeField(default=timezone.now)
-    # Não esquecer de ir a settings.py e alterar o LANGUAGE_CODE para 'pt-pt'
+    # Não esquecer de ir a settings.py e alterar o LANGUAGE_CODE para 'pt-PT'
     # e o TIMEZONE para 'Europe/Lisbon'
     description = models.TextField(blank=True)
     show = models.BooleanField(default=True)

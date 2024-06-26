@@ -6,11 +6,11 @@ from django.core.paginator import Paginator
 # Create your views here.
 def index(request):
 	contacts = Contact.objects.filter(show=True).order_by('-id')
- 
+
 	paginator = Paginator(contacts, 10)
 	page_number = request.GET.get("page")
 	page_obj = paginator.get_page(page_number)
- 
+
 	context = {
 		'page_obj': page_obj,
 		'site_title': 'Contatos -'
@@ -20,7 +20,7 @@ def index(request):
 	    'contact/index.html',
 		context
 	)
- 
+
 def search(request):
     # search_value = request.GET
     # print(search_value)
@@ -37,11 +37,11 @@ def search(request):
 						Q(last_name__icontains=search_value)
              		) \
         			.order_by('-id')
-           
+            
     paginator = Paginator(contacts, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
- 
+
     context = {
 		'page_obj': page_obj,
 		'site_title': 'Contatos -'

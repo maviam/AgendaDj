@@ -5,15 +5,12 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from forms import ContactForm
 
-
-
-
 # Create your views here.
 def create(request):
     form_action = reverse('contact:create')
 	# A ideia é a seguinte: ele vai guardar em form_action, a url a partir do momento que clicamos no send.
 	# Ou seja, é a url que está a aceder a view.
- 
+
     if request.method == 'POST':
         form = ContactForm(request.POST, request.FILES)
         context = {
