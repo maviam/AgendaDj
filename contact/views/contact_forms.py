@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Q
 from contact.models import Contact
 from django.core.paginator import Paginator
 from django.urls import reverse
@@ -34,7 +33,6 @@ def create(request):
     
     context = {
 		'form': ContactForm(),
-        # 'form_action': form_action
 	}
     
     return render(
@@ -46,7 +44,7 @@ def create(request):
 def update(request, contact_id):
     contact = get_object_or_404(Contact, pk=contact_id, show=True)
     form_action = reverse('contact:update', args=(contact_id,))
- 
+
     if request.method == 'POST':
         form = ContactForm(request.POST, request.FILES, instance=contact)
         context = {
@@ -66,7 +64,6 @@ def update(request, contact_id):
     
     context = {
 		'form': ContactForm(instance=contact),
-        # 'form_action': form_action
 	}
     
     return render(

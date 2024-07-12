@@ -16,8 +16,8 @@ def index(request):
 		'site_title': 'Contatos -'
 	}
 	return render(
-	    request,
-	    'contact/index.html',
+		request,
+		'contact/index.html',
 		context
 	)
 
@@ -30,13 +30,7 @@ def search(request):
         return redirect('contact:index')
     
     # https://docs.djangoproject.com/en/5.0/ref/models/lookups/
-    contacts = Contact.objects \
-    				.filter(show=True) \
-					.filter( 
-         				Q(first_name__icontains=search_value) |
-						Q(last_name__icontains=search_value)
-             		) \
-        			.order_by('-id')
+    contacts = Contact.objects.filter(show=True).filter(Q(first_name__icontains=search_value) | Q(last_name__icontains=search_value)).order_by('-id')
             
     paginator = Paginator(contacts, 10)
     page_number = request.GET.get("page")
@@ -48,8 +42,8 @@ def search(request):
 	}
     
     return render(
-	    request,
-	    'contact/index.html',
+		request,
+		'contact/index.html',
 		context
 	)
 
