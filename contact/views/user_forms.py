@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from forms import RegisterForm, RegisterUpdateForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages, auth # O módulo auth possui todos os métodos associados à autenticação
+from django.contrib.auth.decorators import login_required 
 
 def register(request):
     if request.method == 'POST':
@@ -35,6 +36,9 @@ def register(request):
         context
     )
 
+# Este decorador garante que um utilizador somente tem acesso a view se estiver logado
+# O login_url direciona para a url indicada no caso de o utilizador não estar logado
+@login_required(login_url='contact:login')
 def user_update(request):
     form = RegisterUpdateForm(instance=request.user)
     
@@ -98,6 +102,7 @@ def login_view(request):
         context
     )
 
+@login_required(login_url='contact:login')
 def logout_view(request):
     auth.logout(request)
     return redirect('contact:login')

@@ -2,9 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from contact.models import Contact
 from django.core.paginator import Paginator
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from forms import ContactForm
 
 # Create your views here.
+@login_required(login_url='contact:login')
 def create(request):
     form_action = reverse('contact:create')
 	# A ideia é a seguinte: ele vai guardar em form_action, a url a partir do momento que clicamos no send.
@@ -41,6 +43,7 @@ def create(request):
 		context
 	)
 
+@login_required(login_url='contact:login')
 def update(request, contact_id):
     contact = get_object_or_404(Contact, pk=contact_id, show=True)
     form_action = reverse('contact:update', args=(contact_id,))
@@ -72,6 +75,7 @@ def update(request, contact_id):
 		context
 	)
 
+@login_required(login_url='contact:login')
 def delete(request, contact_id):
     contact = get_object_or_404(Contact, pk=contact_id, show=True)
     confirmation = request.POST.get('confirmation','no')
